@@ -21,6 +21,7 @@ readonly class CreditNote
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        /** @deprecated Credit notes have no payment conditions in the Lexware API; ignored. */
         public readonly ?string $paymentConditionId = null,
         public readonly ?string $shippingConditionsDate = null,
     ) {
@@ -61,14 +62,6 @@ readonly class CreditNote
             $data['remark'] = $this->remark;
         }
 
-        if ($this->paymentConditionId !== null) {
-            $data['paymentConditions'] = [
-                'paymentTermLabelTemplate' => '',
-                'paymentTermDuration'      => 0,
-                'id'                       => $this->paymentConditionId,
-            ];
-        }
-
         if ($this->shippingConditionsDate !== null) {
             $data['shippingConditions'] = [
                 'shippingDate' => $this->shippingConditionsDate,
@@ -104,7 +97,6 @@ readonly class CreditNote
             contactId:          $address['contactId'] ?? null,
             introduction:       $data['introduction'] ?? null,
             remark:             $data['remark'] ?? null,
-            paymentConditionId: $data['paymentConditions']['id'] ?? null,
             shippingConditionsDate: $data['shippingConditions']['shippingDate'] ?? null,
         );
     }

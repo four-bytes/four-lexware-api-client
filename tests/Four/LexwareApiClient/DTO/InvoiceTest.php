@@ -129,7 +129,7 @@ class InvoiceTest extends TestCase
             'taxConditions'      => ['taxType' => 'net'],
             'introduction'       => 'Intro',
             'remark'             => 'Remark',
-            'paymentConditions'  => ['id' => 'payment-1'],
+            'paymentConditions'  => ['paymentTermLabel' => '10 Tage - 3 %, 30 Tage netto', 'paymentTermDuration' => 30, 'paymentDiscountConditions' => ['discountPercentage' => 3, 'discountRange' => 10]],
             'shippingConditions' => ['shippingDate' => '2026-03-01'],
             'totalPrice'         => ['totalGrossAmount' => 30.0],
             'title'              => 'Rechnung',
@@ -149,7 +149,9 @@ class InvoiceTest extends TestCase
         self::assertSame('contact-uuid-123', $invoice->contactId);
         self::assertSame('Intro', $invoice->introduction);
         self::assertSame('Remark', $invoice->remark);
-        self::assertSame('payment-1', $invoice->paymentConditionId);
+        self::assertNull($invoice->paymentConditionId);
+        self::assertSame(30, $invoice->paymentConditions->paymentTermDuration);
+        self::assertSame(3.0, $invoice->paymentConditions->discountPercentage);
         self::assertSame('2026-03-01', $invoice->shippingConditionsDate);
         self::assertSame(['totalGrossAmount' => 30.0], $invoice->totalPrice);
         self::assertSame('Rechnung', $invoice->title);

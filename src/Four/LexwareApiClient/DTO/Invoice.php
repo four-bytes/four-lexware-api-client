@@ -23,6 +23,7 @@ readonly class Invoice
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        /** @deprecated Not part of the Lexware API (paymentConditions has no id); ignored. Use $paymentConditions. */
         public readonly ?string $paymentConditionId = null,
         public readonly ?string $shippingConditionsDate = null,
         public readonly ?array $totalPrice = null,
@@ -34,6 +35,7 @@ readonly class Invoice
         public readonly ?string $electronicDocumentProfile = null,
         /** Read-only: true for a closing invoice (Schlussrechnung). Never sent to the API. */
         public readonly ?bool $closingInvoice = null,
+        public readonly ?PaymentConditions $paymentConditions = null,
     ) {
     }
 
@@ -76,12 +78,8 @@ readonly class Invoice
             $data['remark'] = $this->remark;
         }
 
-        if ($this->paymentConditionId !== null) {
-            $data['paymentConditions'] = [
-                'paymentTermLabelTemplate' => '',
-                'paymentTermDuration'      => 0,
-                'id'                       => $this->paymentConditionId,
-            ];
+        if ($this->paymentConditions !== null && $this->paymentConditions->toApiArray() !== []) {
+            $data['paymentConditions'] = $this->paymentConditions->toApiArray();
         }
 
         if ($this->shippingConditionsDate !== null) {
@@ -133,7 +131,7 @@ readonly class Invoice
             contactId:          $address['contactId'] ?? null,
             introduction:       $data['introduction'] ?? null,
             remark:             $data['remark'] ?? null,
-            paymentConditionId: $data['paymentConditions']['id'] ?? null,
+            paymentConditionId: null,
             shippingConditionsDate: $data['shippingConditions']['shippingDate'] ?? null,
             totalPrice: $data['totalPrice'] ?? null,
             title: $data['title'] ?? null,
@@ -142,6 +140,7 @@ readonly class Invoice
             addressSupplement: $address['supplement'] ?? null,
             electronicDocumentProfile: $data['electronicDocumentProfile'] ?? null,
             closingInvoice: $data['closingInvoice'] ?? null,
+            paymentConditions: is_array($data['paymentConditions'] ?? null) ? PaymentConditions::fromArray($data['paymentConditions']) : null,
         );
     }
 }
