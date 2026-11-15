@@ -20,8 +20,16 @@ readonly class DeliveryNote
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        /** @deprecated shippingConditions are not part of the Lexware API for this voucher type; ignored. */
         public readonly ?string $shippingConditionsDate = null,
         public readonly ?string $deliveryTerms = null,
+        public readonly ?string $language = null,
+        public readonly ?string $taxType = null,
+        public readonly ?string $taxSubType = null,
+        public readonly ?string $taxTypeNote = null,
+        public readonly ?string $title = null,
+        public readonly ?string $printLayoutId = null,
+        public readonly ?string $addressSupplement = null,
     ) {
     }
 
@@ -57,15 +65,33 @@ readonly class DeliveryNote
             $data['remark'] = $this->remark;
         }
 
-        if ($this->shippingConditionsDate !== null) {
-            $data['shippingConditions'] = [
-                'shippingDate' => $this->shippingConditionsDate,
-                'shippingType' => 'delivery',
-            ];
-        }
-
         if ($this->deliveryTerms !== null) {
             $data['deliveryTerms'] = $this->deliveryTerms;
+        }
+
+        if ($this->language !== null) {
+            $data['language'] = $this->language;
+        }
+
+        // taxConditions require a taxType; subtype and note are only sent together with it
+        if ($this->taxType !== null) {
+            $data['taxConditions'] = array_filter([
+                'taxType'     => $this->taxType,
+                'taxSubType'  => $this->taxSubType,
+                'taxTypeNote' => $this->taxTypeNote,
+            ], static fn(?string $value): bool => $value !== null);
+        }
+
+        if ($this->title !== null) {
+            $data['title'] = $this->title;
+        }
+
+        if ($this->printLayoutId !== null) {
+            $data['printLayoutId'] = $this->printLayoutId;
+        }
+
+        if ($this->addressSupplement !== null) {
+            $data['address']['supplement'] = $this->addressSupplement;
         }
 
         return $data;
@@ -97,6 +123,13 @@ readonly class DeliveryNote
             remark:                  $data['remark'] ?? null,
             shippingConditionsDate:  $data['shippingConditions']['shippingDate'] ?? null,
             deliveryTerms:           $data['deliveryTerms'] ?? null,
+            language: $data['language'] ?? null,
+            taxType: $data['taxConditions']['taxType'] ?? null,
+            taxSubType: $data['taxConditions']['taxSubType'] ?? null,
+            taxTypeNote: $data['taxConditions']['taxTypeNote'] ?? null,
+            title: $data['title'] ?? null,
+            printLayoutId: $data['printLayoutId'] ?? null,
+            addressSupplement: $address['supplement'] ?? null,
         );
     }
 }

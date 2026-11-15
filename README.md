@@ -223,6 +223,25 @@ $invoice = new Invoice(/* … */, paymentConditions: $conditions);
 
 Without `paymentConditions`, Lexware applies the organization's or contact's default terms. `paymentConditionId` is deprecated and ignored: the API has no such field.
 
+### Shipping conditions and further voucher fields
+
+```php
+use Four\LexwareApiClient\DTO\ShippingConditions;
+
+$invoice = new Invoice(
+    /* voucherDate, address, lineItems … */
+    shippingConditions: new ShippingConditions(
+        ShippingConditions::TYPE_SERVICE_PERIOD, // service, serviceperiod, delivery, deliveryperiod, none
+        shippingDate: '2026-11-01',
+        shippingEndDate: '2026-11-30',
+    ),
+    language: 'en',              // de (default) or en
+    taxSubType: 'distanceSales', // or electronicServices; null = standard voucher
+);
+```
+
+Shipping conditions exist for invoices, order confirmations and dunnings only. All sales vouchers accept `language`, `title`, `printLayoutId`, `addressSupplement`, `taxSubType` and `taxTypeNote`; quotations also `expirationDate`. Line items can reference an article via `articleId` and take an explicit `unitGrossPrice`.
+
 ### Download sales voucher documents
 
 ```php

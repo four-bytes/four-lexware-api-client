@@ -21,6 +21,13 @@ readonly class Dunning
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        public readonly ?string $language = null,
+        public readonly ?string $taxSubType = null,
+        public readonly ?string $taxTypeNote = null,
+        public readonly ?string $title = null,
+        public readonly ?string $printLayoutId = null,
+        public readonly ?string $addressSupplement = null,
+        public readonly ?ShippingConditions $shippingConditions = null,
     ) {
     }
 
@@ -59,6 +66,34 @@ readonly class Dunning
             $data['remark'] = $this->remark;
         }
 
+        if ($this->language !== null) {
+            $data['language'] = $this->language;
+        }
+
+        if ($this->taxSubType !== null) {
+            $data['taxConditions']['taxSubType'] = $this->taxSubType;
+        }
+
+        if ($this->taxTypeNote !== null) {
+            $data['taxConditions']['taxTypeNote'] = $this->taxTypeNote;
+        }
+
+        if ($this->title !== null) {
+            $data['title'] = $this->title;
+        }
+
+        if ($this->printLayoutId !== null) {
+            $data['printLayoutId'] = $this->printLayoutId;
+        }
+
+        if ($this->addressSupplement !== null) {
+            $data['address']['supplement'] = $this->addressSupplement;
+        }
+
+        if ($this->shippingConditions !== null) {
+            $data['shippingConditions'] = $this->shippingConditions->toApiArray();
+        }
+
         return $data;
     }
 
@@ -87,6 +122,13 @@ readonly class Dunning
             contactId:          $address['contactId'] ?? null,
             introduction:       $data['introduction'] ?? null,
             remark:             $data['remark'] ?? null,
+            language: $data['language'] ?? null,
+            taxSubType: $data['taxConditions']['taxSubType'] ?? null,
+            taxTypeNote: $data['taxConditions']['taxTypeNote'] ?? null,
+            title: $data['title'] ?? null,
+            printLayoutId: $data['printLayoutId'] ?? null,
+            addressSupplement: $address['supplement'] ?? null,
+            shippingConditions: is_array($data['shippingConditions'] ?? null) ? ShippingConditions::fromArray($data['shippingConditions']) : null,
         );
     }
 }
