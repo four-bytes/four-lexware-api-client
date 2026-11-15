@@ -73,16 +73,13 @@ readonly class DeliveryNote
             $data['language'] = $this->language;
         }
 
+        // taxConditions require a taxType; subtype and note are only sent together with it
         if ($this->taxType !== null) {
-            $data['taxConditions']['taxType'] = $this->taxType;
-        }
-
-        if ($this->taxSubType !== null) {
-            $data['taxConditions']['taxSubType'] = $this->taxSubType;
-        }
-
-        if ($this->taxTypeNote !== null) {
-            $data['taxConditions']['taxTypeNote'] = $this->taxTypeNote;
+            $data['taxConditions'] = array_filter([
+                'taxType'     => $this->taxType,
+                'taxSubType'  => $this->taxSubType,
+                'taxTypeNote' => $this->taxTypeNote,
+            ], static fn(?string $value): bool => $value !== null);
         }
 
         if ($this->title !== null) {

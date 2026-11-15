@@ -102,6 +102,7 @@ class VoucherFieldsTest extends TestCase
     {
         self::assertArrayNotHasKey('taxConditions', (new DeliveryNote(...self::BASE))->toApiArray());
         self::assertSame(['taxType' => 'net'], (new DeliveryNote(...self::BASE, taxType: 'net'))->toApiArray()['taxConditions']);
+        self::assertArrayNotHasKey('taxConditions', (new DeliveryNote(...self::BASE, taxSubType: 'distanceSales'))->toApiArray());
     }
 
     public function testFromArrayParsesNewFields(): void

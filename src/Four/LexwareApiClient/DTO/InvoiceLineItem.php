@@ -23,7 +23,10 @@ readonly class InvoiceLineItem
         public readonly string $currency = 'EUR',
         /** Article id; references an article for line items of type material or service. */
         public readonly ?string $articleId = null,
-        /** Explicit gross unit price; otherwise derived from the net price and tax rate. */
+        /**
+         * Explicit gross unit price; otherwise derived from the net price and tax rate.
+         * fromArray() fills it from the response — when changing the net price or tax rate, pass null here.
+         */
         public readonly ?float $unitGrossPrice = null,
     ) {
     }
