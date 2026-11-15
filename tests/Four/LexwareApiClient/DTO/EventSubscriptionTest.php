@@ -9,74 +9,62 @@ use PHPUnit\Framework\TestCase;
 
 class EventSubscriptionTest extends TestCase
 {
-    public function testToApiArrayProducesCorrectStructure(): void
+    public function testToApiArrayMatchesDocumentedRequest(): void
     {
-        $subscription = new EventSubscription(
-            callbackUrl: 'https://example.com/webhook',
-            eventTypes:  [
-                EventSubscription::EVENT_INVOICE_CREATED,
-                EventSubscription::EVENT_PAYMENT_CHANGED,
-            ],
+        $subscription = EventSubscription::for(EventSubscription::EVENT_CONTACT_CHANGED, 'https://example.org/webhook');
+
+        self::assertSame(
+            ['eventType' => 'contact.changed', 'callbackUrl' => 'https://example.org/webhook'],
+            $subscription->toApiArray(),
         );
-
-        $data = $subscription->toApiArray();
-
-        self::assertSame('https://example.com/webhook', $data['callbackUrl']);
-        self::assertCount(2, $data['eventTypes']);
-        self::assertContains('invoice.created', $data['eventTypes']);
-        self::assertContains('payment.changed', $data['eventTypes']);
-        self::assertTrue($data['active']);
     }
 
-    public function testActiveCanBeSetToFalse(): void
+    public function testSingleElementArrayKeepsWorking(): void
     {
-        $subscription = new EventSubscription(
-            callbackUrl: 'https://example.com/hook',
-            eventTypes:  [EventSubscription::EVENT_CONTACT_CREATED],
-            active:      false,
-        );
+        $subscription = new EventSubscription(callbackUrl: 'https://example.org/webhook', eventTypes: ['invoice.created'], active: false);
 
-        $data = $subscription->toApiArray();
-        self::assertFalse($data['active']);
+        self::assertSame(['eventType' => 'invoice.created', 'callbackUrl' => 'https://example.org/webhook'], $subscription->toApiArray());
     }
 
-    public function testEventTypeConstants(): void
+    public function testMultipleEventTypesAreRejected(): void
     {
-        self::assertSame('invoice.created', EventSubscription::EVENT_INVOICE_CREATED);
-        self::assertSame('invoice.status.changed', EventSubscription::EVENT_INVOICE_STATUS_CHANGED);
-        self::assertSame('contact.deleted', EventSubscription::EVENT_CONTACT_DELETED);
-        self::assertSame('article.changed', EventSubscription::EVENT_ARTICLE_CHANGED);
-        self::assertSame('credit-note.created', EventSubscription::EVENT_CREDIT_NOTE_CREATED);
-        self::assertSame('payment.changed', EventSubscription::EVENT_PAYMENT_CHANGED);
-        self::assertSame('dunning.created', EventSubscription::EVENT_DUNNING_CREATED);
-        self::assertSame('delivery-note.status.changed', EventSubscription::EVENT_DELIVERY_NOTE_STATUS_CHANGED);
+        $subscription = new EventSubscription('https://example.org/webhook', ['invoice.created', 'payment.changed']);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('exactly one event type, 2 given');
+
+        $subscription->toApiArray();
     }
 
-    public function testFromArrayParsesAllFields(): void
+    public function testNoEventTypeIsRejected(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
+        (new EventSubscription('https://example.org/webhook', []))->toApiArray();
+    }
+
+    public function testFromArrayParsesDocumentedResponse(): void
+    {
+        // element of GET /event-subscriptions (docs sample)
         $subscription = EventSubscription::fromArray([
-            'callbackUrl' => 'https://example.com/webhook',
-            'eventTypes'  => [
-                3 => EventSubscription::EVENT_INVOICE_CREATED,
-                7 => EventSubscription::EVENT_PAYMENT_CHANGED,
-            ],
-            'active' => false,
+            'subscriptionId' => '49aa2f76-c51a-4df3-ae83-3a103d781494',
+            'organizationId' => 'aa93e8a8-2aa3-470b-b914-caad8a255dd8',
+            'createdDate'    => '2023-04-11T12:20:00.000+02:00',
+            'eventType'      => 'contact.changed',
+            'callbackUrl'    => 'https://example.org/webhook',
         ]);
 
-        self::assertSame('https://example.com/webhook', $subscription->callbackUrl);
-        self::assertSame(
-            [EventSubscription::EVENT_INVOICE_CREATED, EventSubscription::EVENT_PAYMENT_CHANGED],
-            $subscription->eventTypes,
-        );
-        self::assertFalse($subscription->active);
+        self::assertSame('49aa2f76-c51a-4df3-ae83-3a103d781494', $subscription->subscriptionId);
+        self::assertSame(['contact.changed'], $subscription->eventTypes);
+        self::assertSame('https://example.org/webhook', $subscription->callbackUrl);
     }
 
-    public function testFromArrayUsesDefaultsForMissingFields(): void
+    public function testFromArrayWithMissingFields(): void
     {
         $subscription = EventSubscription::fromArray([]);
 
         self::assertSame('', $subscription->callbackUrl);
         self::assertSame([], $subscription->eventTypes);
-        self::assertTrue($subscription->active);
+        self::assertNull($subscription->subscriptionId);
     }
 }

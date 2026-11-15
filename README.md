@@ -278,11 +278,8 @@ $page = $client->vouchers()->findByNumber('RE-2026-0001');
 ```php
 use Four\LexwareApiClient\DTO\EventSubscription;
 
-$subscription = new EventSubscription(
-    callbackUrl: 'https://my-domain.com/webhook/lexware',
-    eventTypes: ['invoice.created'],
-    active: true,
-);
+// one subscription per event type
+$subscription = EventSubscription::for('invoice.created', 'https://my-domain.com/webhook/lexware');
 
 $webhook = $client->eventSubscriptions()->create($subscription);
 $webhookId = $webhook['id'];

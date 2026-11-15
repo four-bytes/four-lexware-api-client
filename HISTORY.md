@@ -1,5 +1,8 @@
 # History
 
+## 1.4.1 — 2026-11-15
+- **fix:** `EventSubscription` sent `{eventTypes: [...], active}`; the API takes `{eventType, callbackUrl}` — one event type per subscription, no `active`. It now sends `eventType` (exactly one entry required, otherwise `InvalidArgumentException`); `fromArray()` reads `eventType` and `subscriptionId`; new `EventSubscription::for($eventType, $callbackUrl)`; `active` deprecated (#51)
+
 ## 1.4.0 — 2026-11-15
 - feat: writable voucher fields from the API docs (#49):
   - all sales vouchers: `language`, `taxSubType`, `taxTypeNote`; `title`, `printLayoutId` and `addressSupplement` (previously Invoice only)
