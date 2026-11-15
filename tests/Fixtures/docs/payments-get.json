@@ -1,0 +1,21 @@
+{
+  "openAmount": "1337.00",
+  "currency": "EUR",
+  "paymentStatus": "openRevenue",
+  "voucherType": "salesinvoice",
+  "voucherStatus": "open",
+  "paymentItems": [
+    {
+      "paymentItemType": "manualPayment",
+      "postingDate": "2023-11-04T00:00:00.000+01:00",
+      "amount": 10.0,
+      "currency": "EUR"
+    },
+    {
+      "paymentItemType": "manualPayment",
+      "postingDate": "2023-11-06T00:00:00.000+01:00",
+      "amount": 39.99,
+      "currency": "EUR"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "ac1d66a8-6d59-408b-9413-d56b1db7946f",
+  "organizationId": "a3d94eb4-98bc-429e-b7ad-17f1a8463af9",
+  "createdDate": "2023-02-10T14:29:03.114+01:00",
+  "updatedDate": "2023-02-10T14:29:03.143+01:00",
+  "version": 1,
+  "language": "de",
+  "archived": false,
+  "address": {
+    "contactId": "df315523-1e92-473a-9d00-052212da84f8",
+    "name": "Haufe-Lexware GmbH & Co. KG",
+    "street": "Munzingerstraße 8",
+    "city": "Freiburg",
+    "zip": "79111",
+    "countryCode": "DE"
+  },
+  "lineItems": [
+    {
+      "type": "custom",
+      "name": "Schulung",
+      "quantity": 6,
+      "unitName": "Stunde",
+      "unitPrice": {
+        "currency": "EUR",
+        "netAmount": 100.84,
+        "grossAmount": 120,
+        "taxRatePercentage": 19
+      },
+      "discountPercentage": 0,
+      "lineItemAmount": 720.0
+    }
+  ],
+  "totalPrice": {
+    "currency": "EUR",
+    "totalNetAmount": 605.04,
+    "totalGrossAmount": 720,
+    "totalTaxAmount": 114.96
+  },
+  "taxAmounts": [
+    {
+      "taxRatePercentage": 19,
+      "taxAmount": 114.96,
+      "netAmount": 605.04
+    }
+  ],
+  "taxConditions": {
+    "taxType": "gross"
+  },
+  "paymentConditions": {
+    "paymentTermLabel": "Zahlbar sofort, rein netto",
+    "paymentTermLabelTemplate": "Zahlbar sofort, rein netto",
+    "paymentTermDuration": 0
+  },
+  "introduction": "Unsere Lieferungen/Leistungen stellen wir Ihnen wie folgt in Rechnung.",
+  "remark": "Vielen Dank für die gute Zusammenarbeit.",
+  "title": "Rechnung",
+  "recurringTemplateSettings": {}
+}

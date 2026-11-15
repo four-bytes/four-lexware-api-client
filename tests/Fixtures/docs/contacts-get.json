@@ -1,0 +1,17 @@
+{
+  "id": "e9066f04-8cc7-4616-93f8-ac9ecc8479c8",
+  "organizationId": "aa93e8a8-2aa3-470b-b914-caad8a255dd8",
+  "version": 0,
+  "roles": {
+    "customer": {
+      "number": 10308
+    }
+  },
+  "person": {
+    "salutation": "Frau",
+    "firstName": "Inge",
+    "lastName": "Musterfrau"
+  },
+  "note": "Notizen",
+  "archived": false
+}
