@@ -56,8 +56,8 @@ class EventSubscriptionEndpointTest extends TestCase
         }
 
         self::assertSame('https://example.com/webhook', $body['callbackUrl']);
-        self::assertSame(['invoice.created'], $body['eventTypes']);
-        self::assertTrue($body['active']);
+        self::assertSame('invoice.created', $body['eventType']);
+        self::assertArrayNotHasKey('active', $body);
     }
 
     public function testGetReturnsSubscription(): void
