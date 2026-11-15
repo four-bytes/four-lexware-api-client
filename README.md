@@ -201,6 +201,28 @@ $fileId = $client->files()->uploadToVoucher($voucherId, '/path/to/invoice.pdf');
 $fileId = $client->files()->uploadIncoming('/path/to/incoming-invoice.pdf');
 ```
 
+### Payment conditions
+
+```php
+use Four\LexwareApiClient\DTO\PaymentConditions;
+
+// explicit terms: 30 days net, 3 % discount within 10 days
+$conditions = new PaymentConditions(
+    paymentTermDuration: 30,
+    paymentTermLabel: '10 Tage - 3 %, 30 Tage netto',
+    discountPercentage: 3.0,
+    discountRange: 10,
+);
+
+// or apply a stored payment condition
+$template   = $client->paymentConditions()->list()[0];
+$conditions = PaymentConditions::fromArray($template);
+
+$invoice = new Invoice(/* … */, paymentConditions: $conditions);
+```
+
+Without `paymentConditions`, Lexware applies the organization's or contact's default terms. `paymentConditionId` is deprecated and ignored: the API has no such field.
+
 ### Download sales voucher documents
 
 ```php

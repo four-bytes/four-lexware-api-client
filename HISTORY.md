@@ -1,5 +1,10 @@
 # History
 
+## 1.3.0 — 2026-11-15
+- **fix:** `paymentConditionId` on `Invoice`, `Quotation`, `OrderConfirmation` and `CreditNote` was sent as `paymentConditions: {id, paymentTermLabelTemplate: "", paymentTermDuration: 0}`. The API has no `id` there, so vouchers got a **0-day payment term**. `paymentConditionId` is now deprecated and no longer sent — Lexware applies the default terms (#47)
+- feat: DTO `PaymentConditions` (`paymentTermDuration`, `paymentTermLabel`, `discountPercentage`, `discountRange`) as new last constructor argument `paymentConditions` of `Invoice`, `Quotation` and `OrderConfirmation`; `PaymentConditions::fromArray()` also accepts a template from `paymentConditions()->list()`; `fromArray()` of the vouchers parses the conditions (#47)
+- fix: `CreditNote` no longer sends `paymentConditions` — credit notes have none in the API (#47)
+
 ## 1.2.1 — 2026-11-14
 - chore(deps): `four-bytes/four-http-client` `^4.0 || ^5.0` — installable together with packages that need v5; tests pass against v4.2.1 and v5.0.1 (#45)
 

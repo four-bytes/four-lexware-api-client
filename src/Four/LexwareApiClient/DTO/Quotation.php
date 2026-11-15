@@ -21,8 +21,10 @@ readonly class Quotation
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        /** @deprecated Not part of the Lexware API (paymentConditions has no id); ignored. Use $paymentConditions. */
         public readonly ?string $paymentConditionId = null,
         public readonly ?string $shippingConditionsDate = null,
+        public readonly ?PaymentConditions $paymentConditions = null,
     ) {
     }
 
@@ -61,12 +63,8 @@ readonly class Quotation
             $data['remark'] = $this->remark;
         }
 
-        if ($this->paymentConditionId !== null) {
-            $data['paymentConditions'] = [
-                'paymentTermLabelTemplate' => '',
-                'paymentTermDuration'      => 0,
-                'id'                       => $this->paymentConditionId,
-            ];
+        if ($this->paymentConditions !== null && $this->paymentConditions->toApiArray() !== []) {
+            $data['paymentConditions'] = $this->paymentConditions->toApiArray();
         }
 
         if ($this->shippingConditionsDate !== null) {
@@ -104,8 +102,9 @@ readonly class Quotation
             contactId:          $address['contactId'] ?? null,
             introduction:       $data['introduction'] ?? null,
             remark:             $data['remark'] ?? null,
-            paymentConditionId: $data['paymentConditions']['id'] ?? null,
+            paymentConditionId: null,
             shippingConditionsDate: $data['shippingConditions']['shippingDate'] ?? null,
+            paymentConditions: is_array($data['paymentConditions'] ?? null) ? PaymentConditions::fromArray($data['paymentConditions']) : null,
         );
     }
 }

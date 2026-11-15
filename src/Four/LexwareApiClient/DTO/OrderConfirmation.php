@@ -21,9 +21,11 @@ readonly class OrderConfirmation
         public readonly ?string $contactId = null,
         public readonly ?string $introduction = null,
         public readonly ?string $remark = null,
+        /** @deprecated Not part of the Lexware API (paymentConditions has no id); ignored. Use $paymentConditions. */
         public readonly ?string $paymentConditionId = null,
         public readonly ?string $shippingConditionsDate = null,
         public readonly ?string $deliveryTerms = null,
+        public readonly ?PaymentConditions $paymentConditions = null,
     ) {
     }
 
@@ -62,12 +64,8 @@ readonly class OrderConfirmation
             $data['remark'] = $this->remark;
         }
 
-        if ($this->paymentConditionId !== null) {
-            $data['paymentConditions'] = [
-                'paymentTermLabelTemplate' => '',
-                'paymentTermDuration'      => 0,
-                'id'                       => $this->paymentConditionId,
-            ];
+        if ($this->paymentConditions !== null && $this->paymentConditions->toApiArray() !== []) {
+            $data['paymentConditions'] = $this->paymentConditions->toApiArray();
         }
 
         if ($this->shippingConditionsDate !== null) {

@@ -69,7 +69,7 @@ class OrderConfirmationTest extends TestCase
         self::assertSame('contact-uuid-123', $data['address']['contactId']);
         self::assertSame('Einleitung', $data['introduction']);
         self::assertSame('Bemerkung', $data['remark']);
-        self::assertSame('payment-1', $data['paymentConditions']['id']);
+        self::assertArrayNotHasKey('paymentConditions', $data); // deprecated paymentConditionId is not sent
         self::assertSame('2026-03-01', $data['shippingConditions']['shippingDate']);
         self::assertSame('delivery', $data['shippingConditions']['shippingType']);
     }

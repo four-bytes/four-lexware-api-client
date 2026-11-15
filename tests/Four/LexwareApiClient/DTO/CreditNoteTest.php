@@ -69,7 +69,7 @@ class CreditNoteTest extends TestCase
         self::assertSame('contact-uuid-123', $data['address']['contactId']);
         self::assertSame('Einleitung', $data['introduction']);
         self::assertSame('Bemerkung', $data['remark']);
-        self::assertSame('payment-1', $data['paymentConditions']['id']);
+        self::assertArrayNotHasKey('paymentConditions', $data); // deprecated paymentConditionId is not sent
         self::assertSame('2026-03-01', $data['shippingConditions']['shippingDate']);
         self::assertSame('delivery', $data['shippingConditions']['shippingType']);
     }
@@ -112,7 +112,7 @@ class CreditNoteTest extends TestCase
             'taxConditions'      => ['taxType' => 'net'],
             'introduction'       => 'Einleitung',
             'remark'             => 'Bemerkung',
-            'paymentConditions'  => ['id' => 'payment-1'],
+            'paymentConditions'  => ['paymentTermLabel' => '10 Tage - 3 %, 30 Tage netto', 'paymentTermDuration' => 30, 'paymentDiscountConditions' => ['discountPercentage' => 3, 'discountRange' => 10]],
             'shippingConditions' => ['shippingDate' => '2026-03-01'],
         ]);
 
@@ -128,7 +128,7 @@ class CreditNoteTest extends TestCase
         self::assertSame('contact-uuid-123', $creditNote->contactId);
         self::assertSame('Einleitung', $creditNote->introduction);
         self::assertSame('Bemerkung', $creditNote->remark);
-        self::assertSame('payment-1', $creditNote->paymentConditionId);
+        self::assertNull($creditNote->paymentConditionId);
         self::assertSame('2026-03-01', $creditNote->shippingConditionsDate);
     }
 
