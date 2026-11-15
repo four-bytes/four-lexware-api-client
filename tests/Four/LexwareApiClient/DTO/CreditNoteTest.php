@@ -70,8 +70,7 @@ class CreditNoteTest extends TestCase
         self::assertSame('Einleitung', $data['introduction']);
         self::assertSame('Bemerkung', $data['remark']);
         self::assertArrayNotHasKey('paymentConditions', $data); // deprecated paymentConditionId is not sent
-        self::assertSame('2026-03-01', $data['shippingConditions']['shippingDate']);
-        self::assertSame('delivery', $data['shippingConditions']['shippingType']);
+        self::assertArrayNotHasKey('shippingConditions', $data); // not part of the API for this voucher type
     }
 
     public function testToApiArrayOmitsNullOptionalFields(): void

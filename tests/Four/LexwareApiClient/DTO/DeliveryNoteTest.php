@@ -39,7 +39,7 @@ class DeliveryNoteTest extends TestCase
         self::assertCount(1, $data['lineItems']);
     }
 
-    public function testToApiArrayIncludesShippingConditions(): void
+    public function testToApiArrayOmitsUndocumentedShippingConditions(): void
     {
         $note = new DeliveryNote(
             voucherDate:            '2026-02-25',
@@ -54,7 +54,7 @@ class DeliveryNoteTest extends TestCase
 
         $data = $note->toApiArray();
 
-        self::assertSame('2026-03-01', $data['shippingConditions']['shippingDate']);
+        self::assertArrayNotHasKey('shippingConditions', $data); // not part of the API for delivery notes
     }
 
     public function testFromArrayParsesAllFields(): void

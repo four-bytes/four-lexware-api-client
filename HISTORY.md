@@ -1,5 +1,14 @@
 # History
 
+## 1.4.0 — 2026-11-15
+- feat: writable voucher fields from the API docs (#49):
+  - all sales vouchers: `language`, `taxSubType`, `taxTypeNote`; `title`, `printLayoutId` and `addressSupplement` (previously Invoice only)
+  - `totalPrice` on Quotation, CreditNote, OrderConfirmation; `expirationDate` on Quotation; `taxType` on DeliveryNote (optional)
+  - DTO `ShippingConditions` (`shippingType` service/serviceperiod/delivery/deliveryperiod/none, `shippingDate`, `shippingEndDate`) on Invoice, OrderConfirmation and Dunning; `shippingConditionsDate` keeps working on Invoice and OrderConfirmation (type `delivery`)
+  - line items: `articleId` (sent as `id`) and explicit `unitGrossPrice`
+  - all new constructor arguments are appended; `fromArray()` parses them
+- fix: Quotation, CreditNote and DeliveryNote no longer send `shippingConditions` — not part of the API for these types; `shippingConditionsDate` is deprecated and ignored there (#49)
+
 ## 1.3.0 — 2026-11-15
 - **fix:** `paymentConditionId` on `Invoice`, `Quotation`, `OrderConfirmation` and `CreditNote` was sent as `paymentConditions: {id, paymentTermLabelTemplate: "", paymentTermDuration: 0}`. The API has no `id` there, so vouchers got a **0-day payment term**. `paymentConditionId` is now deprecated and no longer sent — Lexware applies the default terms (#47)
 - feat: DTO `PaymentConditions` (`paymentTermDuration`, `paymentTermLabel`, `discountPercentage`, `discountRange`) as new last constructor argument `paymentConditions` of `Invoice`, `Quotation` and `OrderConfirmation`; `PaymentConditions::fromArray()` also accepts a template from `paymentConditions()->list()`; `fromArray()` of the vouchers parses the conditions (#47)

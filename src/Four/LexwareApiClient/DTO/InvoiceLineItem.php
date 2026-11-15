@@ -21,6 +21,10 @@ readonly class InvoiceLineItem
         public readonly ?string $description = null,
         public readonly ?float $discountPercentage = null,
         public readonly string $currency = 'EUR',
+        /** Article id; references an article for line items of type material or service. */
+        public readonly ?string $articleId = null,
+        /** Explicit gross unit price; otherwise derived from the net price and tax rate. */
+        public readonly ?float $unitGrossPrice = null,
     ) {
     }
 
@@ -37,10 +41,14 @@ readonly class InvoiceLineItem
             'unitPrice' => [
                 'currency'          => $this->currency,
                 'netAmount'         => $this->unitNetPrice,
-                'grossAmount'      => round($this->unitNetPrice * (1 + $this->taxRatePercentage / 100.0), 2),
+                'grossAmount'       => $this->unitGrossPrice ?? round($this->unitNetPrice * (1 + $this->taxRatePercentage / 100.0), 2),
                 'taxRatePercentage' => $this->taxRatePercentage,
             ],
         ];
+
+        if ($this->articleId !== null) {
+            $data['id'] = $this->articleId;
+        }
 
         if ($this->description !== null) {
             $data['description'] = $this->description;
@@ -72,6 +80,8 @@ readonly class InvoiceLineItem
             description:          $data['description'] ?? null,
             discountPercentage:  isset($data['discountPercentage']) ? (float) $data['discountPercentage'] : null,
             currency:             $unitPrice['currency'] ?? 'EUR',
+            articleId:            $data['id'] ?? null,
+            unitGrossPrice:       isset($unitPrice['grossAmount']) ? (float) $unitPrice['grossAmount'] : null,
         );
     }
 }

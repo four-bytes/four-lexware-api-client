@@ -23,7 +23,16 @@ readonly class CreditNote
         public readonly ?string $remark = null,
         /** @deprecated Credit notes have no payment conditions in the Lexware API; ignored. */
         public readonly ?string $paymentConditionId = null,
+        /** @deprecated shippingConditions are not part of the Lexware API for this voucher type; ignored. */
         public readonly ?string $shippingConditionsDate = null,
+        public readonly ?string $language = null,
+        public readonly ?string $taxSubType = null,
+        public readonly ?string $taxTypeNote = null,
+        public readonly ?string $title = null,
+        public readonly ?string $printLayoutId = null,
+        public readonly ?string $addressSupplement = null,
+        /** @var array<string, mixed>|null */
+        public readonly ?array $totalPrice = null,
     ) {
     }
 
@@ -62,11 +71,32 @@ readonly class CreditNote
             $data['remark'] = $this->remark;
         }
 
-        if ($this->shippingConditionsDate !== null) {
-            $data['shippingConditions'] = [
-                'shippingDate' => $this->shippingConditionsDate,
-                'shippingType' => 'delivery',
-            ];
+        if ($this->language !== null) {
+            $data['language'] = $this->language;
+        }
+
+        if ($this->taxSubType !== null) {
+            $data['taxConditions']['taxSubType'] = $this->taxSubType;
+        }
+
+        if ($this->taxTypeNote !== null) {
+            $data['taxConditions']['taxTypeNote'] = $this->taxTypeNote;
+        }
+
+        if ($this->title !== null) {
+            $data['title'] = $this->title;
+        }
+
+        if ($this->printLayoutId !== null) {
+            $data['printLayoutId'] = $this->printLayoutId;
+        }
+
+        if ($this->addressSupplement !== null) {
+            $data['address']['supplement'] = $this->addressSupplement;
+        }
+
+        if ($this->totalPrice !== null) {
+            $data['totalPrice'] = $this->totalPrice;
         }
 
         return $data;
@@ -98,6 +128,13 @@ readonly class CreditNote
             introduction:       $data['introduction'] ?? null,
             remark:             $data['remark'] ?? null,
             shippingConditionsDate: $data['shippingConditions']['shippingDate'] ?? null,
+            language: $data['language'] ?? null,
+            taxSubType: $data['taxConditions']['taxSubType'] ?? null,
+            taxTypeNote: $data['taxConditions']['taxTypeNote'] ?? null,
+            title: $data['title'] ?? null,
+            printLayoutId: $data['printLayoutId'] ?? null,
+            addressSupplement: $address['supplement'] ?? null,
+            totalPrice: $data['totalPrice'] ?? null,
         );
     }
 }

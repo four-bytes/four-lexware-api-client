@@ -26,6 +26,15 @@ readonly class OrderConfirmation
         public readonly ?string $shippingConditionsDate = null,
         public readonly ?string $deliveryTerms = null,
         public readonly ?PaymentConditions $paymentConditions = null,
+        public readonly ?string $language = null,
+        public readonly ?string $taxSubType = null,
+        public readonly ?string $taxTypeNote = null,
+        public readonly ?string $title = null,
+        public readonly ?string $printLayoutId = null,
+        public readonly ?string $addressSupplement = null,
+        /** @var array<string, mixed>|null */
+        public readonly ?array $totalPrice = null,
+        public readonly ?ShippingConditions $shippingConditions = null,
     ) {
     }
 
@@ -68,7 +77,9 @@ readonly class OrderConfirmation
             $data['paymentConditions'] = $this->paymentConditions->toApiArray();
         }
 
-        if ($this->shippingConditionsDate !== null) {
+        if ($this->shippingConditions !== null) {
+            $data['shippingConditions'] = $this->shippingConditions->toApiArray();
+        } elseif ($this->shippingConditionsDate !== null) {
             $data['shippingConditions'] = [
                 'shippingDate' => $this->shippingConditionsDate,
                 'shippingType' => 'delivery',
@@ -77,6 +88,34 @@ readonly class OrderConfirmation
 
         if ($this->deliveryTerms !== null) {
             $data['deliveryTerms'] = $this->deliveryTerms;
+        }
+
+        if ($this->language !== null) {
+            $data['language'] = $this->language;
+        }
+
+        if ($this->taxSubType !== null) {
+            $data['taxConditions']['taxSubType'] = $this->taxSubType;
+        }
+
+        if ($this->taxTypeNote !== null) {
+            $data['taxConditions']['taxTypeNote'] = $this->taxTypeNote;
+        }
+
+        if ($this->title !== null) {
+            $data['title'] = $this->title;
+        }
+
+        if ($this->printLayoutId !== null) {
+            $data['printLayoutId'] = $this->printLayoutId;
+        }
+
+        if ($this->addressSupplement !== null) {
+            $data['address']['supplement'] = $this->addressSupplement;
+        }
+
+        if ($this->totalPrice !== null) {
+            $data['totalPrice'] = $this->totalPrice;
         }
 
         return $data;

@@ -36,6 +36,10 @@ readonly class Invoice
         /** Read-only: true for a closing invoice (Schlussrechnung). Never sent to the API. */
         public readonly ?bool $closingInvoice = null,
         public readonly ?PaymentConditions $paymentConditions = null,
+        public readonly ?string $language = null,
+        public readonly ?string $taxSubType = null,
+        public readonly ?string $taxTypeNote = null,
+        public readonly ?ShippingConditions $shippingConditions = null,
     ) {
     }
 
@@ -82,7 +86,9 @@ readonly class Invoice
             $data['paymentConditions'] = $this->paymentConditions->toApiArray();
         }
 
-        if ($this->shippingConditionsDate !== null) {
+        if ($this->shippingConditions !== null) {
+            $data['shippingConditions'] = $this->shippingConditions->toApiArray();
+        } elseif ($this->shippingConditionsDate !== null) {
             $data['shippingConditions'] = [
                 'shippingDate' => $this->shippingConditionsDate,
                 'shippingType' => 'delivery',
@@ -101,6 +107,18 @@ readonly class Invoice
         }
         if ($this->printLayoutId !== null) {
             $data['printLayoutId'] = $this->printLayoutId;
+        }
+
+        if ($this->language !== null) {
+            $data['language'] = $this->language;
+        }
+
+        if ($this->taxSubType !== null) {
+            $data['taxConditions']['taxSubType'] = $this->taxSubType;
+        }
+
+        if ($this->taxTypeNote !== null) {
+            $data['taxConditions']['taxTypeNote'] = $this->taxTypeNote;
         }
 
         return $data;
@@ -141,6 +159,10 @@ readonly class Invoice
             electronicDocumentProfile: $data['electronicDocumentProfile'] ?? null,
             closingInvoice: $data['closingInvoice'] ?? null,
             paymentConditions: is_array($data['paymentConditions'] ?? null) ? PaymentConditions::fromArray($data['paymentConditions']) : null,
+            language: $data['language'] ?? null,
+            taxSubType: $data['taxConditions']['taxSubType'] ?? null,
+            taxTypeNote: $data['taxConditions']['taxTypeNote'] ?? null,
+            shippingConditions: is_array($data['shippingConditions'] ?? null) ? ShippingConditions::fromArray($data['shippingConditions']) : null,
         );
     }
 }
