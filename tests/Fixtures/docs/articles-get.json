@@ -1,0 +1,17 @@
+{
+  "id": "eb46d328-e1dc-11ee-8444-2fadfc15a567",
+  "title": "Lexware buchhaltung Premium 2024",
+  "description": "Monatsabonnement. Mehrplatzsystem zur Buchhaltung. Produkt vom Marktführer. PC Aktivierungscode per Email",
+  "type": "PRODUCT",
+  "articleNumber": "LXW-BUHA-2024-001",
+  "gtin": "9783648170632",
+  "note": "Interne Notiz",
+  "unitName": "Download-Code",
+  "price": {
+    "netPrice": 61.9,
+    "grossPrice": 73.66,
+    "leadingPrice": "NET",
+    "taxRate": 19
+  },
+  "version": 0
+}

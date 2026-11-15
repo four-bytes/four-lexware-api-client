@@ -1,5 +1,8 @@
 # History
 
+## Unreleased
+- test: one test per documented API operation (53) against the documentation's sample responses (`tests/Fixtures/docs/`), plus `fromArray()` checks against the documented response shapes (#34)
+
 ## 1.4.1 — 2026-11-15
 - **fix:** `EventSubscription` sent `{eventTypes: [...], active}`; the API takes `{eventType, callbackUrl}` — one event type per subscription, no `active`. It now sends `eventType` (exactly one entry required, otherwise `InvalidArgumentException`); `fromArray()` reads `eventType` and `subscriptionId`; new `EventSubscription::for($eventType, $callbackUrl)`; `active` deprecated (#51)
 

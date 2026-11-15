@@ -1,0 +1,70 @@
+{
+  "id": "e7f66576-d5c8-4dbd-9a01-c2c4d6695da6",
+  "organizationId": "aa93e8a8-2aa3-470b-b914-caad8a255dd8",
+  "createdDate": "2023-07-21T15:26:51.469+02:00",
+  "updatedDate": "2023-07-21T15:26:51.548+02:00",
+  "version": 2,
+  "language": "de",
+  "archived": false,
+  "voucherStatus": "draft",
+  "voucherDate": "2023-07-22T01:00:00.000+02:00",
+  "address": {
+    "name": "Bike & Ride GmbH & Co. KG",
+    "supplement": "Gebäude 10",
+    "street": "Musterstraße 42",
+    "city": "Freiburg",
+    "zip": "79112",
+    "countryCode": "DE"
+  },
+  "lineItems": [
+    {
+      "type": "custom",
+      "name": "Energieriegel Testpaket",
+      "quantity": 1,
+      "unitName": "Stück",
+      "unitPrice": {
+        "currency": "EUR",
+        "netAmount": 5,
+        "grossAmount": 5.0,
+        "taxRatePercentage": 0.0
+      },
+      "discountPercentage": 0,
+      "lineItemAmount": 5.0
+    },
+    {
+      "type": "text",
+      "name": "Strukturieren Sie Ihre Belege durch Text-Elemente.",
+      "description": "Das hilft beim Verständnis"
+    }
+  ],
+  "totalPrice": {
+    "currency": "EUR",
+    "totalNetAmount": 5.0,
+    "totalGrossAmount": 5.0,
+    "totalTaxAmount": 0.0
+  },
+  "taxAmounts": [
+    {
+      "taxRatePercentage": 0.0,
+      "taxAmount": 0.0,
+      "netAmount": 5.0
+    }
+  ],
+  "taxConditions": {
+    "taxType": "net"
+  },
+  "shippingConditions": {
+    "shippingDate": "2023-05-22T00:00:00.000+02:00",
+    "shippingType": "delivery"
+  },
+  "relatedVouchers": [
+    {
+      "id": "ddc4c966-aae0-4e0e-a229-3ec9085ee9a3",
+      "voucherNumber": "RE0357",
+      "voucherType": "invoice"
+    }
+  ],
+  "introduction": "Wir bitten Sie, die nachfolgend aufgelisteten Lieferungen/Leistungen unverzüglich zu begleichen.",
+  "remark": "Sollten Sie den offenen Betrag bereits beglichen haben, betrachten Sie dieses Schreiben als gegenstandslos.",
+  "title": "Mahnung"
+}

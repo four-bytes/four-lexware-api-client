@@ -1,0 +1,92 @@
+{
+  "content": [
+    {
+      "id": "cab021e5-91d3-4e93-a696-56b7f2417547",
+      "organizationId": "a3d94eb4-98bc-429e-b7ad-17f1a8463af9",
+      "title": "Rechnung",
+      "createdDate": "2023-02-10T14:35:40.642+01:00",
+      "updatedDate": "2023-02-10T14:36:49.741+01:00",
+      "address": {
+        "contactId": "464f4881-7a8c-4dc4-87de-7c6fd9a506b8",
+        "name": "Bike & Ride GmbH & Co. KG"
+      },
+      "totalPrice": {
+        "currency": "EUR",
+        "totalNetAmount": 251.26,
+        "totalGrossAmount": 299
+      },
+      "paymentConditions": {
+        "paymentTermLabel": "10 Tage abzüglich 2 % Skonto",
+        "paymentTermLabelTemplate": "{paymentRange} Tage abzüglich {discount} Skonto",
+        "paymentTermDuration": 10,
+        "paymentDiscountConditions": {
+          "discountPercentage": 2,
+          "discountRange": 10
+        }
+      },
+      "recurringTemplateSettings": {
+        "id": "615a8db3-bce1-4e11-8302-328fcbacd613",
+        "startDate": "2023-04-01",
+        "endDate": "2024-04-01",
+        "finalize": false,
+        "shippingType": "serviceperiod",
+        "retroactiveInvoice": false,
+        "executionInterval": "QUARTERLY",
+        "nextExecutionDate": null,
+        "lastExecutionDate": null,
+        "lastExecutionFailed": false,
+        "executionStatus": "PAUSED"
+      }
+    },
+    {
+      "id": "ac1d66a8-6d59-408b-9413-d56b1db7946f",
+      "organizationId": "a3d94eb4-98bc-429e-b7ad-17f1a8463af9",
+      "title": "Rechnung",
+      "createdDate": "2023-02-10T14:29:03.114+01:00",
+      "updatedDate": "2023-02-10T14:29:03.143+01:00",
+      "address": {
+        "contactId": "df315523-1e92-473a-9d00-052212da84f8",
+        "name": "Haufe-Lexware GmbH & Co. KG"
+      },
+      "totalPrice": {
+        "currency": "EUR",
+        "totalNetAmount": 605.04,
+        "totalGrossAmount": 720
+      },
+      "paymentConditions": {
+        "paymentTermLabel": "Zahlbar sofort, rein netto",
+        "paymentTermLabelTemplate": "Zahlbar sofort, rein netto",
+        "paymentTermDuration": 0
+      },
+      "recurringTemplateSettings": {
+        "id": "9c5b8bde-7d36-49e8-af5c-4fbe7dc9fa01",
+        "startDate": "2023-03-01",
+        "endDate": "2023-06-30",
+        "finalize": true,
+        "shippingType": "service",
+        "retroactiveInvoice": false,
+        "executionInterval": "MONTHLY",
+        "nextExecutionDate": "2023-03-01",
+        "lastExecutionDate": null,
+        "lastExecutionFailed": false,
+        "executionStatus": "ACTIVE"
+      }
+    }
+  ],
+  "first": true,
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 2,
+  "numberOfElements": 2,
+  "size": 25,
+  "number": 0,
+  "sort": [
+    {
+      "property": "createdDate",
+      "direction": "DESC",
+      "ignoreCase": false,
+      "nullHandling": "NATIVE",
+      "ascending": false
+    }
+  ]
+}

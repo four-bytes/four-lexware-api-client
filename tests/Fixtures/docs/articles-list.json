@@ -1,0 +1,54 @@
+{
+  "content": [
+    {
+      "id": "eb46d328-e1dc-11ee-8444-2fadfc15a567",
+      "title": "Lexware buchhaltung Premium 2024",
+      "description": "Monatsabonnement. Mehrplatzsystem zur Buchhaltung. Produkt vom Marktführer. PC Aktivierungscode per Email",
+      "type": "PRODUCT",
+      "articleNumber": "LXW-BUHA-2024-001",
+      "gtin": "9783648170632",
+      "note": "Interne Notiz",
+      "unitName": "Download-Code",
+      "price": {
+        "netPrice": 61.9,
+        "grossPrice": 73.66,
+        "leadingPrice": "NET",
+        "taxRate": 19
+      },
+      "version": 1
+    },
+    {
+      "id": "f7e14ba6-e2ac-11ee-96c1-3b561501789e",
+      "title": "Lexware warenwirtschaft Premium 2024",
+      "description": "Monatsabonnement. Mehrplatzsystem zur kompletten Warenwirtschaft. Produkt vom Marktführer. PC Aktivierungscode per Email",
+      "type": "PRODUCT",
+      "articleNumber": "LXW-WAWI-2024-001",
+      "gtin": "9783648170779",
+      "note": "Interne Notiz",
+      "unitName": "Download-Code",
+      "price": {
+        "netPrice": 61.9,
+        "grossPrice": 73.66,
+        "leadingPrice": "NET",
+        "taxRate": 19
+      },
+      "version": 3
+    }
+  ],
+  "totalPages": 1,
+  "totalElements": 2,
+  "last": true,
+  "sort": [
+    {
+      "direction": "ASC",
+      "property": "title",
+      "ignoreCase": false,
+      "nullHandling": "NATIVE",
+      "ascending": true
+    }
+  ],
+  "size": 25,
+  "number": 0,
+  "first": true,
+  "numberOfElements": 2
+}
